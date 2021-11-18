@@ -1,0 +1,32 @@
+NAME       DEPARTMENT       DESIGNATION        EDUCATION     PHONE_NUMBER   FACULTY/STAFF     EMAIL_ID
+Haneef        EE            Professor          Phd_EE        0421111         Faculty         Haneef@nu.edu.pk
+Muaaid        EE            Professor          Phd_EE        042111          Faculty         Muaaid@nu.edu.pk
+Haa           EE            Professor          Phd_EE        042111          Faculty         Haatim@nu.edu.pk
+Anwar         CS            Professor          Phd_EE        0421111         Faculty         Anwar@nu.edu.pk
+Aqeel         CS            Assi.Professor     Phd_EE        0421111         Faculty         Aqeel@nu.edu.pk
+Arafaat       EE            Assi.Professor     Phd_EE        0421111         Faculty         Arafaat@nu.edu.pk
+Saabir        EE            Assi.Professor     Phd_EE        0421111         Faculty         Saabir@nu.edu.pk
+Saadiq        EE            Assi.Professor     Phd_EE        0421111         Faculty         Saadiq@nu.edu.pk
+Saahir        EE            Assi.Professor     Phd_EE        0421111         Faculty         Saahir@nu.edu.pk
+Umair         EE            Assi.Professor     Phd_EE        0421111         Staff           Umair@nu.edu.pk
+Umar          EE            Assi.Professor     Phd_EE        0421111         Staff           Umar@nu.edu.pk
+Unais         EE            Assi.Professor     Phd_EE        0421111         Staff           Unais@nu.edu.pk
+Nabeel        CS            Assi.Professor     Phd_EE        0421111         Staff           Nabeel@nu.edu.pk
+Nadeem        CS            Assi.Professor     Phd_EE        0421111         Staff           Nadeem@nu.edu.pk
+Nadheer       CS            Assi.Professor     Phd_EE        0421111         Staff           Nadheer@nu.edu.pk
+Najeeb        EE            lecturer           MSc_EE        0421111         Staff           Najeeb@nu.edu.pk
+Najeem        EE            lecturer           MSc_EE        0421111         Staff           Najeem@nu.edu.pk
+Naseem        EE            lecturer           MSc_EE        0421111         Staff           Naseem@nu.edu.pk
+Ikram         EE            lecturer           MSc_EE        0421111         Staff           Ikram@nu.edu.pk
+Ilyaas        CS            lecturer           MSc_EE        0421111         Staff           Ilyaas@nu.edu.pk
+Imaad         CS            lecturer           MSc_EE        0421111         Staff           Imaad@nu.edu.pk
+Imraan        CS            lecturer           MSc_EE        0421111         Staff           Imraan@nu.edu.pk
+Irfaan        CS            lecturer           MSc_EE        0421111         Staff           Irfaan@nu.edu.pk
+Isaam         CS            lecturer           MSc_EE        0421111         Staff           Isaam@nu.edu.pk
+Ishaaq        CS            Lab_Engineer       BSc_EE        0421111         Staff           Ishaaq@nu.edu.pk
+Ismad         EE            Lab_Engineer       BSc_EE        0421111         Staff           Ismad@nu.edu.pk
+Ismaee        EE            Lab_Engineer       BSc_EE        0421111         Staff           lIsmaeel@nu.edu.pk
+Iyaad         EE            Lab_Engineer       BSC_EE        0421111         Staff           Iyaad@nu.edu.pk
+
+
+

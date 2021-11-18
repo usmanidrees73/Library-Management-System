@@ -1,0 +1,23 @@
+NAME:				Book_AUDIO-VIDEO	STATUS
+Electric_Circuits		Book			Available
+Electrical_machines		Book			Available
+Transmission_Distribution 	Book			Available
+Power_System_Analysis		Book			Available
+Power_Electronics		Book			Available
+Measurements			Book			Available
+Digital				Book			Available
+Analog_Electronics		Book			Not_available
+Microelectronic_Circuits	Book			Not_available
+Signals_and_Systems		Book			Not_available
+Linear_Systems_and_Signals 	Audio-Video		Available
+Microwave_Engineering		Audio-Video		Available
+Digital_Signal_Processing	Audio-Video		Available
+DSP_Filter_Cookbook 		Audio-Video		Available
+Fortran_77			Audio-Video		Available
+Digital_Filter_Design		Audio-Video		Available
+Wireless_Communications		Audio-Video		Available
+Programming1			Audio-Video		Available
+programming2			Audio-Video		Available
+Communicaition_skills		Audio-Video		Available
+Techanical_Report_Writing	Audio-Video		Available
+

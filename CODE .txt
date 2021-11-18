@@ -1,0 +1,1282 @@
+/*---------------------------------------------
+------------------Usman Idrees-----------------
+-------------------L12-5759--------------------
+------------------LAB--PROJECT-----------------
+-------------MADE-IN-MS-VS-2012----------------
+----------------------------------------------*/
+# include <iostream>
+# include <fstream>
+# include <string>
+# include <cstdlib>
+# include <iomanip>
+using namespace std;
+class grade_calculation
+{
+private:
+	char grade;
+public:
+	char grading(double);
+	grade_calculation();
+};
+class University
+{
+public:
+	string **p;
+	string s;
+	int rows;
+	int columns;
+	int fileno;
+	grade_calculation g;
+
+	University();
+	void print_address();
+	void setfileno(int n){fileno = n;};
+	friend ifstream & operator>>(ifstream&, University&);
+	friend ofstream & operator<<(ofstream&, University&);
+	void setcol(int col){columns = col;}
+};
+class Library : public University
+{
+private:
+	ifstream in;
+	ofstream out;
+public:
+	void print_menu();
+	void open_library_file();
+	void Keep_record_of_issued_books_and_AUDIO_VIDEOS();
+};
+class Department : public University
+{
+protected:
+	string *p;
+	string name;
+	string department;
+	string section;
+	string s; 
+	ifstream in;
+	ofstream out;
+	double course1;
+	double course2;
+	double course3;
+	double course4;
+	double total;
+public:
+	void department_wise_searching();
+	void result_of_particular_student();
+	void department_file_openning();
+	void add_new_student();
+	void update_record_of_a_student();
+};
+
+class Section : public Department
+{
+private:
+	string section1;
+public:
+	void section_wise_searching();
+};
+
+class Employ : public Department
+{
+public:
+	void open_employ_file();
+	void display_details_of_specific_staff_or_faculty_member();
+};
+class Books : public Library
+{
+private:
+	int n;
+	int e;
+	int x;
+	string *p;
+public:
+		void display_books();
+		void add_books();
+		void keep_record_of_issue_books();
+
+
+};
+class Audio_Video : public Library
+{
+private:
+	int n;
+	int e;
+	int x;
+	string *p;
+public:
+		void display_audio_video();
+		void add_audio_video();
+		void keep_record_of_issued_audio_video();
+};
+class Faculty : public Employ
+{
+private:
+	int i;
+public:
+	void display_faculty_working_in_university();
+	void update_faculty_member();
+	void update_faculty_record();
+
+};
+class Staff : public Employ
+{
+private:
+	int i;
+public:
+	void display_staff_working_in_university();
+	void update_staff_member();
+	void update_staff_record();
+};
+void Audio_Video::display_audio_video()
+{
+	print_address();
+	cout<<endl;
+	cout.setf(ios::left);
+	University obj;
+	obj.setcol(3);
+	obj.setfileno(3);
+	ifstream in;
+	in.open("Library.txt");
+	in>>obj;
+	cout<<setw(32)<<obj.p[0][0]<<setw(24)<<obj.p[0][1]<<obj.p[0][2]<<endl;
+	for (int i=0;i<obj.rows; i++)
+	{
+		if (obj.p[i][1]=="Audio-Video")
+		{
+			cout<<setw(32)<<obj.p[i][0]<<setw(24)<<obj.p[i][1]<<obj.p[i][2]<<endl;
+		}
+	}
+
+}
+void Library:: Keep_record_of_issued_books_and_AUDIO_VIDEOS()
+{
+	int n = 0, issue = 0;
+	University obj;
+	obj.setcol(3);
+	string name;
+	obj.setfileno(3);
+	in.open("Library.txt");
+	in>>obj;
+	cout.setf(ios::left);
+
+	cout<<"-------------------------------------------------------------------------"<<endl;
+	cout<<" - Press 1 to see issued Books or Audio-Videos "<<endl;
+	cout<<" - Press 2 to see available Books and Audio-Videos "<<endl;
+	cout<<" - Press 3 to ISSUE a Books or Audio-Videos "<<endl;
+	cout<<"-------------------------------------------------------------------------"<<endl;
+	cout<<"   Enter input: ";
+	cin>>n;
+
+	while (true)
+	{
+		if(n>=1&&n<=3)
+		{
+			break;
+		}
+		else
+		{
+			cout<<endl;
+			cout<<"   Type a valid input "<<endl;
+			cout<<"   Enter input: ";
+			cin>>n;
+		}
+	}
+	if (n==1)
+	{
+		cout<<endl;
+		cout<<setw(32)<<"NAME"<<setw(24)<<"TYPE"<<"STATUS"<<endl;
+		cout<<endl;
+		for (int i=0; i<obj.rows; i++)
+		{
+				if (obj.p[i][2]=="Not_available")
+				{
+					cout<<setw(32)<<obj.p[i][0]<<setw(24)<<obj.p[i][1]<<obj.p[i][2]<<endl;
+				}
+		}
+	}
+	else if (n==2)
+	{
+		cout<<endl;
+		cout<<setw(32)<<"NAME"<<setw(24)<<"TYPE"<<"STATUS"<<endl;
+
+		cout<<endl;
+		for (int i=0; i<obj.rows; i++)
+		{
+				if (obj.p[i][2]=="Available")
+				{
+					cout<<setw(32)<<obj.p[i][0]<<setw(24)<<obj.p[i][1]<<obj.p[i][2]<<endl;
+				}
+		}
+
+	}
+
+	else if (n==3)
+	{
+		in>>obj;
+		cout<<"Enter book name: ";
+		cin>>name;
+		out.open("Library.txt");
+		obj.setfileno(3);
+		for (int m = 0; m < obj.rows; m++)
+		{
+				
+			if (obj.p[m][0]==name)
+			{
+				cout<<"-:-BOOK ISSUED-:-"<<endl;
+				obj.p[m][2] = "Not_available";
+				out<<obj;
+				break;
+			}
+				
+		}
+	}
+	in.close();
+	exit(1);
+
+}
+University::University()
+{
+	s = " ", rows = 0, columns = 1, fileno = 0;
+}
+void Faculty:: update_faculty_record()
+{
+	print_address();
+	int n = 0;
+	string staff_name;
+	University obj;
+	obj.setcol(7);
+	obj.setfileno(2);
+	cout<<"Enter Faculty name: ";
+	cin>>staff_name;
+	ifstream in;
+	ofstream out;
+	string y;
+	in.open("faculty_staff_list.txt");
+	in>>obj;
+	cin.ignore();
+	for (int i=0; i<obj.rows; i++)
+	{
+		if (obj.p[i][0]==staff_name && obj.p[i][5] == "Faculty")
+		{
+			cout<<"Enter new DEPARTMENT: ";
+			getline(cin, y, '\n');
+			obj.p[i][1] = y;
+			cout<<"Enter new DESIGNATION: "; 
+			getline(cin, y, '\n');
+			obj.p[i][2] = y;
+			cout<<"Enter new EDUCATION : ";
+			getline(cin, y, '\n');
+			obj.p[i][3] = y;
+			cout<<"Enter new PHONE_NUMBER: "; 
+			getline(cin, y, '\n');
+			obj.p[i][4] = y;
+			cout<<"Enter new EMAIL_ID: "; 
+			getline(cin, y, '\n');
+			obj.p[i][6] = y;
+			n = 1;
+			break;
+		}
+	}
+	if (n==0)
+	{
+		cout<<"NAME NOT FOUND IN Faculty LIST"<<endl;
+	}
+	in.close();
+	out.open("faculty_staff_list.txt");
+	out<<obj;
+}
+void Staff:: update_staff_record()
+{
+	print_address();
+	int n = 0;
+	string staff_name;
+	University obj;
+	obj.setcol(7);
+	obj.setfileno(2);
+	cout<<"Enter staff name: ";
+	cin>>staff_name;
+	ifstream in;
+	ofstream out;
+	string y;
+	in.open("faculty_staff_list.txt");
+	in>>obj;
+	cin.ignore();
+	for (int i=0; i<obj.rows; i++)
+	{
+		if (obj.p[i][0]==staff_name && obj.p[i][5] == "Staff")
+		{
+			cout<<"Enter new DEPARTMENT: ";
+			getline(cin, y, '\n');
+			obj.p[i][1] = y;
+			cout<<"Enter new DESIGNATION: "; 
+			getline(cin, y, '\n');
+			obj.p[i][2] = y;
+			cout<<"Enter new EDUCATION : ";
+			getline(cin, y, '\n');
+			obj.p[i][3] = y;
+			cout<<"Enter new PHONE_NUMBER: "; 
+			getline(cin, y, '\n');
+			obj.p[i][4] = y;
+			cout<<"Enter new EMAIL_ID: "; 
+			getline(cin, y, '\n');
+			obj.p[i][6] = y;
+			n = 1;
+			break;
+		}
+	}
+	if (n==0)
+	{
+		cout<<"NAME NOT FOUND IN STAFF LIST"<<endl;
+	}
+	in.close();
+	out.open("faculty_staff_list.txt");
+	out<<obj;
+}
+ifstream & operator>>(ifstream&in,  University& obj)
+{
+	int i = 0, b = 0;
+	getline(in,obj.s,'\n');
+	b = obj.s.length();
+	in.clear();
+	in.seekg (0, ios::beg);
+	while (!in.eof())
+	{
+		getline(in, obj.s, '\n');
+		obj.rows++;
+	}
+	in.clear();
+	in.seekg (0, ios::beg);
+
+
+	obj.p = new string*[obj.rows];
+
+	for (int i=0; i<obj.rows; i++)
+	{
+		obj.p[i] = new string[obj.columns];
+	}
+
+	for (int i=0; i<obj.rows; i++)
+	{
+		for (int j=0; j<obj.columns; j++)
+		{
+			in>>obj.p[i][j];
+		}
+	}
+
+	
+	return in;
+}
+
+ofstream & operator<<(ofstream& out, University& obj)
+{
+	out.setf(ios::left);
+	if (obj.fileno==1)
+	{
+		for (int i=0; i<obj.rows; i++)
+		{
+			
+			//out<<setw(18)<<obj.p[i][0]<<setw(20)<<obj.p[i][1]<<setw(19)<<obj.p[i][2]<<setw(14)<<obj.p[i][3]<<setw(22)<<obj.p[i][4]<<obj.p[i][5]<<endl;                                    
+			out<<setw(18)<<obj.p[i][0]<<setw(20)<<obj.p[i][1]<<setw(23)<<obj.p[i][2]<<setw(15)<<obj.p[i][3]<<setw(22)<<obj.p[i][4]<<obj.p[i][5]<<endl;
+		}
+	}
+	else if (obj.fileno==2)
+	{
+		for (int i=0; i<obj.rows; i++)
+		{
+			out<<setw(14)<<obj.p[i][0]<<setw(14)<<obj.p[i][1]<<setw(19)<<obj.p[i][2]<<setw(14)<<obj.p[i][3]<<setw(16)<<obj.p[i][4]<<setw(16)<<obj.p[i][5]<<obj.p[i][6]<<endl;
+		}
+	}
+	else if (obj.fileno==3)
+	{
+		for (int i=0; i<obj.rows; i++)
+		{
+			out<<setw(32)<<obj.p[i][0]<<setw(24)<<obj.p[i][1]<<obj.p[i][2]<<endl;
+		}
+
+	}
+	for (int i=0; i<obj.rows; i++)
+	{
+		delete  [] obj.p[i];
+	}
+	delete [] obj.p;
+	return out;
+}
+grade_calculation::grade_calculation()
+{
+	grade = '\0';
+}
+char grade_calculation::grading(double a)
+{
+
+	if (a<=4 && a>=3.5)
+	{
+		grade = 'A';
+	}
+	else if(a<=3.5 && a>=3)
+	{
+		grade = 'B';
+	}
+	else if (a<=3 && a>=2.5)
+	{
+		grade = 'C';
+	}
+	else if (a<=2.5 && a>=2)
+	{
+		grade = 'D';
+	}
+	else if (a<2)
+	{
+		grade = 'F';
+	}
+	return grade;
+
+}
+void Audio_Video::add_audio_video()
+{
+	print_address();
+	n = 3, e=0, x=0;
+	p = new string[n];
+	ofstream out;
+	out.open("Library.txt",ios::app);
+	out.setf(ios::left);
+	cout<<"How many items you want to add in list ";
+	cin>>x;
+	while(e<x)
+	{
+		cout<<"Enter AUDIO-VIDEO name: ";
+		cin>>p[0];
+		p[1]= "Audio-Video";
+		cout<<"Enter status     ";
+		cin>>p[2];
+		out<<setw(32)<<p[0]<<setw(24)<<p[1]<<p[2]<<endl;
+		cout<<endl;
+		e++;
+	}
+}
+void Employ:: display_details_of_specific_staff_or_faculty_member()
+{
+	print_address();
+	cout.setf(ios::left);
+	ifstream in;
+	int i = 0;
+	string s, *p, name;
+	cin.ignore();
+	cout<<"NAME:         ";
+	getline(cin,name,'\n');
+	in.open("faculty_staff_list.txt");
+	while (s!="EMAIL_ID")
+	{
+		in>>s;
+		i++;
+	}
+	p = new string [i];
+
+	while (!in.eof())
+	{
+		for (int j=0; j<i; j++)
+		{
+			in>>p[j];
+		}
+		if (p[0]==name)
+		{
+			break;
+		}
+
+	}
+	if (p[0]!=name)
+	{
+		cout<<"INVALID NAME "<<endl;
+	}
+	else
+	{
+		cout<<setw(14)<<"DESIGNATION:"<<p[2]<<endl;
+		cout<<setw(14)<<"DEPARTMENT:"<<p[1]<<endl;
+		cout<<setw(14)<<"EDUCATION:"<<p[3]<<endl;
+		cout<<setw(14)<<"EMAIL ID:"<<p[6]<<endl;
+		cout<<setw(14)<<"PHONE NUMBER:"<<p[4]<<endl;
+	}
+}
+void Audio_Video::keep_record_of_issued_audio_video()
+{
+	int x = 0, o = 0;
+	int n = 3, e=0;
+	string *p, book;
+	p = new string[n];
+	ifstream in;
+	ofstream out;
+	out.open("Books issued.txt", ios::app);
+	cout<<"How many Audio-Video you want to issue ";
+	cin>>x;
+	while(e<x)
+	{
+		cout<<"Enter Audio-video name   ";
+		cin>>book;
+		in.open("Library.txt");
+		while (!in.eof())
+		{
+			in>>p[0];
+			in>>p[1];
+			in>>p[2];
+			if (p[0]==book && p[2] == "Available")
+			{
+				break;
+			}
+			else if (p[0]==book && p[2] == "Not_available")
+			{
+				o = 1;
+				break;
+			}
+		}
+		if (o==1)
+		{
+			cout<<"Audio-Video is currently not available ";
+		}
+		else if (p[0]!=book)
+		{
+			cout<<"Audio-Video no. "<<e+1<<" NOT FOUND"<<endl;
+		}
+		else
+		{
+			out<<p[0]<<"	"<<"Audio-Video"<<endl;
+		}
+		in.close();
+		e++;
+	}
+}
+
+void Books:: display_books()
+{
+	print_address();
+	cout<<endl;
+	cout.setf(ios::left);
+	University obj;
+	obj.setcol(3);
+	obj.setfileno(3);
+	ifstream in;
+	in.open("Library.txt");
+	in>>obj;
+	cout<<setw(32)<<obj.p[0][0]<<setw(24)<<obj.p[0][1]<<obj.p[0][2]<<endl;
+	for (int i=0;i<obj.rows; i++)
+	{
+		if (obj.p[i][1]=="Book")
+		{
+			cout<<setw(32)<<obj.p[i][0]<<setw(24)<<obj.p[i][1]<<obj.p[i][2]<<endl;
+		}
+	}
+
+}
+void Books::add_books()
+{
+	print_address();
+	n = 3, e=0, x=0;
+	p = new string[n];
+	ofstream out;
+	out.open("Library.txt",ios::app);
+	out.setf(ios::left);
+	cout<<"How many items you want to add in list ";
+	cin>>x;
+	while(e<x)
+	{
+		cout<<"Enter BOOK name: ";
+		cin>>p[0];
+		p[1]= "Book";
+		cout<<"Enter status     ";
+		cin>>p[2];
+		out<<setw(32)<<p[0]<<setw(24)<<p[1]<<p[2]<<endl;
+		cout<<endl;
+		e++;
+	}
+
+}
+void Books::keep_record_of_issue_books()
+{
+	int x = 0, o = 0;
+	int n = 3, e=0;
+	string *p, book;
+	p = new string[n];
+	ifstream in;
+	ofstream out;
+	out.open("Books issued.txt", ios::app);
+	cout<<"How many items you books you want to issue ";
+	cin>>x;
+	while(e<x)
+	{
+		cout<<"Enter book name   ";
+		cin>>book;
+		in.open("Library.txt");
+		while (!in.eof())
+		{
+			in>>p[0];
+			in>>p[1];
+			in>>p[2];
+			if (p[0]==book && p[2] == "Available")
+			{
+				break;
+			}
+			else if (p[0]==book && p[2] == "Not_available")
+			{
+				o = 1;
+				break;
+			}
+		}
+		if (o==1)
+		{
+			cout<<"Book is currently not available ";
+		}
+		else if (p[0]!=book)
+		{
+			cout<<"BOOK no. "<<e+1<<" NOT FOUND"<<endl;
+		}
+		else
+		{
+			out<<p[0]<<"	"<<"Book"<<endl;
+		}
+		in.close();
+		e++;
+	}
+}
+
+
+void Staff::update_staff_member()
+{
+	print_address();
+	out.open("faculty_staff_list.txt",ios::app);
+	out.setf(ios::left);
+	i = 7;
+	p = new string [i];
+	cin.ignore();
+
+	cout<<"enter NAME:        ";
+	cin>>p[0];
+	cout<<"Enter DEPARTMENT:  ";
+	cin>>p[1];
+	cout<<"Enter DESIGNATION: ";
+	cin>>p[2];
+	cout<<"EDUCATION          ";
+	cin>>p[3];
+	cout<<"PHONE_NUMBER       ";
+	cin>>p[4];
+	p[5] = "Staff";
+	cout<<"EMAIL_ID           ";
+	cin>>p[6];
+	out<<setw(14)<<p[0]<<setw(14)<<p[1]<<setw(19)<<p[2]<<setw(14)<<p[3]<<setw(16)<<p[4]<<setw(16)<<p[5]<<p[6]<<endl;
+
+}
+void Faculty::update_faculty_member()
+{
+	out.setf(ios::left);
+	out.open("faculty_staff_list.txt",ios::app);
+	i = 7;
+	p = new string [i];
+	print_address();
+	cin.ignore();
+
+	cout<<"enter NAME:        ";
+	cin>>p[0];
+	cout<<"Enter DEPARTMENT:  ";
+	cin>>p[1];
+	cout<<"Enter DESIGNATION: ";
+	cin>>p[2];
+	cout<<"EDUCATION          ";
+	cin>>p[3];
+	cout<<"PHONE_NUMBER       ";
+	cin>>p[4];
+	p[5] = "Faculty";
+	cout<<"EMAIL_ID           ";
+	cin>>p[6];
+	out<<setw(14)<<p[0]<<setw(14)<<p[1]<<setw(19)<<p[2]<<setw(14)<<p[3]<<setw(16)<<p[4]<<setw(16)<<p[5]<<p[6]<<endl;
+
+}
+void Faculty:: display_faculty_working_in_university()
+{
+	print_address();
+	cout<<endl;
+	cout.setf(ios::left);
+	University obj;
+	obj.setcol(7);
+	obj.setfileno(3);
+	ifstream in;
+	in.open("faculty_staff_list.txt");
+	in>>obj;
+	cout<<setw(14)<<obj.p[0][1];
+	cout<<setw(15)<<obj.p[0][2];
+	cout<<setw(14)<<obj.p[0][3];
+	cout<<setw(14)<<obj.p[0][4];
+	cout<<setw(14)<<obj.p[0][5];
+	cout<<obj.p[0][6];
+	cout<<endl;
+	for (int i=0; i<obj.rows; i++)
+	{
+		if (obj.p[i][5]=="Faculty")
+			{
+				cout<<setw(14)<<obj.p[i][1];
+				cout<<setw(15)<<obj.p[i][2];
+				cout<<setw(14)<<obj.p[i][3];
+				cout<<setw(14)<<obj.p[i][4];
+				cout<<setw(14)<<obj.p[i][5];
+				cout<<obj.p[i][6];
+				cout<<endl;
+			}
+	}
+
+}
+
+void Staff:: display_staff_working_in_university()
+{
+	print_address();
+	cout<<endl;
+	cout.setf(ios::left);
+	University obj;
+	obj.setcol(7);
+	obj.setfileno(3);
+	ifstream in;
+	in.open("faculty_staff_list.txt");
+	in>>obj;
+	cout<<setw(14)<<obj.p[0][1];
+	cout<<setw(15)<<obj.p[0][2];
+	cout<<setw(14)<<obj.p[0][3];
+	cout<<setw(14)<<obj.p[0][4];
+	cout<<setw(14)<<obj.p[0][5];
+	cout<<obj.p[0][6];
+	cout<<endl;
+	for (int i=0; i<obj.rows; i++)
+	{
+		if (obj.p[i][5]=="Staff")
+			{
+				cout<<setw(14)<<obj.p[i][1];
+				cout<<setw(15)<<obj.p[i][2];
+				cout<<setw(14)<<obj.p[i][3];
+				cout<<setw(14)<<obj.p[i][4];
+				cout<<setw(14)<<obj.p[i][5];
+				cout<<obj.p[i][6];
+				cout<<endl;
+			}
+	}
+}
+
+void University ::print_address()
+{
+	cout<<"-------------------------------------------------------------------------"<<endl;
+	cout<<" National University of Computer and Emerging Sciences <FAST-NU>, Lahore";
+	cout<<"\n ADDRESS:   Block-B, Faisal Town, Lahore";
+	cout<<"\n PHONE #:   042356754"<<endl;
+	cout<<"-------------------------------------------------------------------------"<<endl;
+}
+void Library::print_menu()
+{
+	cout<<"Press 1 to Display the list Books and Audio/video-CDs."<<endl;
+	cout<<"Press 2 to Update the list of Books and CDs in library."<<endl;
+	cout<<"Press 3 to Keep record of issued books."<<endl;
+}
+void Library::open_library_file()
+{
+	in.open("Library.txt");
+}
+void Department::department_wise_searching()
+{
+	print_address();
+	while (true)
+	{
+		cin.ignore();
+		cout<<"DEPARTMENT: ";
+		getline(cin,department,'\n');
+
+		if (department=="Electrical Engineering"||department=="Computer Sciences")
+		{
+			break;
+		}
+		else
+		{
+			cout<<"Enter correct information ";
+		}
+	}
+
+	department_file_openning();
+	cout.setf(ios::left);
+	cout<<endl;
+	cout<<endl;
+
+	cout<<"STUDENT NAME		SECTION		MARKS		GRADE"<<endl;
+	in>>s>>s>>s>>s>>s>>s;
+	while (!in.eof())
+	{
+		in>>name;
+		in>>section;
+		in>>course1;
+		in>>course2;
+		in>>course3;
+		in>>course4;
+		total = (course1+course2+course3+course4)/4;
+		cout<<setw(25)<<name<<setw(15)<<section<<setw(16)<<total<<"  "<<g.grading(total)<<endl;
+		
+	}
+
+	in.close();
+}
+void Department:: result_of_particular_student()
+{
+	print_address();
+	string name1, section1;
+	cout.setf(ios::left);
+	while (true)
+	{
+		cin.ignore();
+		cout<<" STUDENT NAME: ";
+		getline(cin,name, '\n');
+		cout<<" DEPARTMENT:   ";
+		getline(cin,department, '\n');
+		cout<<" SECTION:      ";
+		getline(cin,section, '\n');
+		if (department=="Electrical Engineering" ||department=="Computer Sciences")
+		{
+			break;
+		}
+		else
+		{
+			cout<<"Enter correct information "<<endl;
+		}
+	}
+	department_file_openning();
+	in>>s>>s>>s>>s>>s>>s;
+	while (!in.eof())
+	{
+		in>>name1;
+		in>>section1;
+		in>>course1;
+		in>>course2;
+		in>>course3;
+		in>>course4;
+
+		if (name == name1)
+		{
+			break;
+		}
+	}
+
+	in.close();
+	if (name1!=name)
+	{
+		cout<<"INVALID INFORMATION"<<endl;
+	}
+	else
+	{
+		cout<<endl;
+		cout<<endl;
+			total = (course1 + course2 + course3 +  course4)/4.0;
+			cout<<"COURSES                MARKS	GRADES \n";
+			department_file_openning();
+			in>>s;
+			in>>s;
+			in>>s;
+			cout<<setw(24)<<s<<course1<<"       "<<g.grading(course1)<<endl;
+			in>>s;
+			cout<<setw(23)<<s<<"	"<<course2<<"       "<<g.grading(course2)<<endl;
+			in>>s; 
+			cout<<setw(23)<<s<<"	"<<course3<<"       "<<g.grading(course3)<<endl;
+			in>>s; 
+			cout<<setw(23)<<s<<"	"<<course4<<"       "<<g.grading(course4)<<endl;
+			cout<<"......................................................"<<endl;
+			cout<<setw(23)<<"TOTAL"<<"	"<<total<<"       "<<g.grading(total)<<endl;
+		
+
+	}
+}
+void Department::update_record_of_a_student()
+{
+	print_address();
+	int i = 6, row=0, xx=0;
+	string **p;
+	string name, department, section, s, name1;
+	ifstream in;
+	ofstream out;
+	cout.setf(ios::left);
+	cin.ignore();
+	while (true)
+	{
+		cout<<" STUDENT NAME: ";
+		getline(cin,name, '\n');
+		cout<<" DEPARTMENT:   ";
+		getline(cin,department, '\n');
+		if (department=="Electrical Engineering" ||department=="Computer Sciences")
+		{
+			break;
+		}
+		else
+		{
+			cout<<"Enter correct information "<<endl;
+		}
+	}
+	if (department == "Electrical Engineering")
+	{
+		in.open("Electrical_Engineering.txt");
+	}
+	else
+	{
+		in.open("Computer_Science.txt");
+	}
+
+	int j = 0;
+
+	while (!in.eof())
+	{
+		//in>>s;
+		//in>>s>>s>>s>>s>>s;
+		getline(in,s,'\n');
+		j++;
+	}
+	in.close();
+	p = new string* [j];
+
+	for (int y=0; y<j; y++)
+	{
+		p[y] = new string[i];
+	}
+
+	if (department == "Electrical Engineering")
+	{
+		in.open("Electrical_Engineering.txt");
+	}
+	else
+	{
+		in.open("Computer_Science.txt");
+	}
+	int n = 0;
+	while (n<j)
+	{
+		for (int h=0; h<i; h++)
+		{
+			in>>p[n][h];
+			if (p[n][h] == name)
+			{
+				xx=1;
+				row = n;
+			}
+		}
+		n++;
+	}
+
+	if (xx==0)
+	{
+		cout<<"name does not found !!!!!"<<endl;
+		exit(1);
+	}
+	
+	
+		cout<<"Enter updated section:                      ";
+		cin>>p[row][1];
+		cout<<"Enter updated marks in CIRCUIT ANALYSIS:    ";
+		cin>>p[row][2];
+		cout<<"Enter updated marks in PROGRAMMING 2:       ";
+		cin>>p[row][3];
+		cout<<"Enter updated marks in PROJECT:             ";
+		cin>>p[row][4];
+		cout<<"Enter updated marks in 8051MICROCONTROLLER: ";
+		cin>>p[row][5];
+
+if (department == "Electrical Engineering")
+	{
+		out.open("Electrical_Engineering.txt");
+	}
+	else
+	{
+		out.open("Computer_Science.txt");
+	}
+
+out.setf(ios::left);
+for (int m=0; m<j; m++)
+{																	
+	out<<setw(18)<<p[m][0]<<setw(20)<<p[m][1]<<setw(23)<<p[m][2]<<setw(15)<<p[m][3]<<setw(22)<<p[m][4]<<p[m][5]<<endl;
+}
+}
+void Department::department_file_openning()
+{
+	if (department == "Electrical Engineering")
+	{
+		in.open("Electrical_Engineering.txt");
+	}
+	else
+	{
+		in.open("Computer_Science.txt");
+	}
+}
+void Section:: section_wise_searching()
+{
+	int a=0, i=0;
+	print_address();
+	while (true)
+	{
+	while (true)
+	{
+		cin.ignore();
+		cout<<"DEPARTMENT: ";
+		getline(cin,department,'\n');
+		cout<<"SECTION:    ";
+		getline(cin,section,'\n');
+		if (department=="Electrical Engineering"||department=="Computer Sciences")
+		{
+			break;
+		}
+		else
+		{
+			cout<<"Enter correct information ";
+		}
+	}
+
+	if (department == "Electrical Engineering")
+	{
+		in.open("Electrical_Engineering.txt");
+	}
+	else
+	{
+		in.open("Computer_Science.txt");
+	}
+	cout.setf(ios::left);
+	cout<<endl;
+	cout<<endl;
+	in>>s>>s>>s>>s>>s>>s;
+	while (!in.eof())
+	{
+		in>>name;
+		in>>section1;
+		in>>course1;
+		in>>course2;
+		in>>course3;
+		in>>course4;
+		if (section == section1)
+		{
+			a= 1;
+			if (i==0)
+			{
+				cout<<"STUDENT NAME		MARKS		GRADE"<<endl;
+			}
+			total = (course1+course2+course3+course4)/4;
+			cout<<setw(25)<<name<<setw(15)<<total<<"  "<<g.grading(total)<<endl;//grade(total)<<endl;
+			i++;
+		}
+		
+	}
+
+	if (a==0)
+	{
+		cout<<"Enter correct information"<<endl;
+	}
+	else
+	{
+		break;
+	}
+	in.close();
+}
+}
+void Employ::open_employ_file()
+{
+	in.open("faculty_staff_list.txt");
+}
+
+void Department:: add_new_student()
+{
+	print_address();
+	string department, section, s, name;
+	ofstream out;
+	out.setf(ios::left);
+	double course1, course2, course3, course4, total = 0; // total = marks 
+	cout<<endl;
+	cout<<endl;
+	while (true)
+	{
+		cin.ignore();
+		cout<<"DEPARTMENT:                   ";
+		getline(cin,department,'\n');
+
+		if (department=="Electrical Engineering"||department=="Computer Sciences")
+		{
+			break;
+		}
+		else
+		{
+			cout<<"Enter correct information ";
+			cin.ignore();
+		}
+	}
+
+	if (department == "Electrical Engineering")
+	{
+		out.open("Electrical_Engineering.txt",ios::app);
+		
+			cout<<"student NAME:                 ";
+			cin>>name;
+			cout<<"SECTION:                      ";
+			cin>>section;
+			cout<<"marks in CIRCUIT_ANALYSIS:    ";
+			cin>>course1;
+			cout<<"marks in PROGRAMMING_2:       ";
+			cin>>course2;
+			cout<<"marks in PROJECT:             ";
+			cin>>course3;
+			cout<<"marks in 8051MICROCONTROLLER: ";
+			cin>>course4;
+																			//13
+			out<<setw(18)<<name<<setw(20)<<section<<setw(23)<<course1<<setw(15)<<course2<<setw(22)<<course3<<course4<<endl;
+
+	}
+	else
+	{
+		out.open("Computer_Science.txt",ios::app);
+			cout<<"student NAME:                 ";
+			cin>>name;
+			cout<<"SECTION:                      ";
+			cin>>section;
+			cout<<"marks in Communication Skill:    ";
+			cin>>course1;
+			cout<<"marks in PROGRAMMING 2:       ";
+			cin>>course2;
+			cout<<"marks in PROJECT:             ";
+			cin>>course3;
+			cout<<"marks in DATA BASE: ";
+			cin>>course4;
+			out<<setw(18)<<name<<setw(20)<<section<<setw(23)<<course1<<setw(15)<<course2<<setw(22)<<course3<<course4<<endl;
+	}
+}
+int main()
+{
+	int n = 0, no = 0, choice = 0;
+	University a;
+	Faculty a1;
+	Section s;
+	Staff st;
+	Faculty fac;
+	Books b;
+	Audio_Video av;
+	while(true)
+	{
+	while (true)
+	{
+		try
+		{
+			a.print_address();
+			cout<<"----------------------------------MENU-----------------------------------"<<endl;
+			cout<<" - Press  1 to Display the result of particular student."<<endl;
+			cout<<" - Press  2 to Display section wise result."<<endl;
+			cout<<" - Press  3 to Display department wise result."<<endl;
+			cout<<" - Press  4 to Add new student in the section file."<<endl;
+			cout<<" - Press  5 to Update record of a student. "<<endl;
+			cout<<" - Press  6 to Display the list of staff. "<<endl;
+			cout<<" - Press  7 to Display the list of faculty. "<<endl;
+			cout<<" - Press  8 to Display the details of specfic staff or faculty."<<endl;
+			cout<<" - Press  9 to ADD/Update staff member."<<endl;
+			cout<<" - Press 10 to ADD/Update faculty."<<endl;
+			cout<<" - Press 11 to Display the list of Books."<<endl;
+			cout<<" - Press 12 to Display the list of Audio/video-CDs."<<endl;
+			cout<<" - Press 13 to Update the list of Books in library."<<endl;
+			cout<<" - Press 14 to Update the list of CDs in library."<<endl;
+			cout<<" - Press 15 to Keep record of issued books and AUDIO-VIDEOS."<<endl;
+			cout<<"-------------------------------------------------------------------------"<<endl;
+			cout<<"   Enter input: ";
+			cin>>n;
+
+			if (n<1 || n>16)
+			{
+				throw n;
+			}
+			else
+			{
+				break;
+			}
+		}
+		catch (int n)
+		{
+			cout<<"Please enter a valid input"<<endl;
+		}
+	}
+	system ("cls");
+	if (n==1)
+	{
+		a1.result_of_particular_student();
+	}
+	else if (n==2)
+	{
+		s.section_wise_searching();
+	}
+	else if (n==3)
+	{
+		s.department_wise_searching();
+	}
+	else if (n==4)
+	{
+		s.add_new_student();
+	}
+	else if (n==5)
+	{
+		s.update_record_of_a_student();
+	}
+	else if (n==6)
+	{
+		st.display_staff_working_in_university();
+	}
+	else if (n==7)
+	{
+		fac.display_faculty_working_in_university();
+	}
+	else if (n==8)
+	{
+		fac.display_details_of_specific_staff_or_faculty_member();
+	}
+	else if (n==9)
+	{
+		cout<<"Press 1 to add staff member and any other to update staff member ";
+		cin>>choice;
+		if (choice==1)
+		{
+			st.update_staff_member();
+		}
+		else
+		{
+			st.update_staff_record();
+		}
+	}
+	else if (n==10)
+	{
+		
+		cout<<"Press 1 to add FACULTY member and any other to update FACULTY member ";
+		cin>>choice;
+		if (choice==1)
+		{
+			fac.update_faculty_member();
+		}
+		else
+		{
+			fac.update_faculty_record();
+		}
+	}
+	else if (n==11)
+	{
+		b.display_books();
+	}
+	else if (n==12)
+	{
+		av.display_audio_video();
+	}
+	else if (n==13)
+	{
+		b.add_books();
+	}
+	else if (n==14)
+	{
+		av.add_audio_video();
+	}
+	else if (n==15)
+	{
+		b.Keep_record_of_issued_books_and_AUDIO_VIDEOS();
+	}
+	cout<<"press 1 to contunue and any other number to terminate program: ";
+	cin>>no;
+	if (no!=1)
+	{
+		break;
+	}
+	else
+	{
+		system("cls");
+	}
+	}
+	return 0;
+}
